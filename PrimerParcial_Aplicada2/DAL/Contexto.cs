@@ -3,12 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using PrimerParcial_Aplicada2.Models;
 
 namespace PrimerParcial_Aplicada2.DAL
 {
     public class Contexto : DbContext
     {
-        //public DbSet<> MyProperty { get; set; }
+        public DbSet<Articulos> articulos { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
