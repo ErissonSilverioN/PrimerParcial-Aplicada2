@@ -18,6 +18,8 @@ namespace PrimerParcial_Aplicada2.Models
         public int Existencia { get; set; }
         public decimal Costo  { get; set; }
         public decimal ValorInventario { get; set; }
+        public DateTime Fecha { get; set; }
+
 
         public Articulos()
         {
@@ -26,6 +28,7 @@ namespace PrimerParcial_Aplicada2.Models
             Existencia = 0;
             Costo = 0;
             ValorInventario = 0;
+            Fecha = DateTime.Now;
         }
     }
 }

@@ -13,7 +13,7 @@ namespace PrimerParcial_Aplicada2.DAL
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite(@"Data Source= C:\Users\PANDA\source\repos\PrimerParcial_Aplicada2\PrimerParcial_Aplicada2\DataBase\ParcialDB.db");
+            optionsBuilder.UseSqlite(@"Data Source =C:\Users\PANDA\source\repos\PrimerParcial-Aplicada2\DataBase\ParcialDb.db");
             base.OnConfiguring(optionsBuilder);
         }
     }

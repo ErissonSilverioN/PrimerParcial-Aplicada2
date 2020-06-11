@@ -1,0 +1,192 @@
+﻿@page "/R_Articulos"
+@page "/R_Articulos/{ArticuloId:int}"
+
+@using PrimerParcial_Aplicada2.Models;
+@using PrimerParcial_Aplicada2.BLL;
+
+
+
+<EditForm Model="articulos" OnValidSubmit="Guardar">
+    <DataAnnotationsValidator/>
+
+    <div class="card">
+        <div class="card-header">
+            <h3>Registro de Articulos</h3>
+        </div>
+
+
+        <div class="card-body">
+            <form>
+                <div class="form-row align-items-center">
+                    <div class="col">
+                        <div class="form-group">
+                            <label>ArticuloID</label>
+                            <div class="input-group">
+                                <InputNumber @bind-Value="articulos.ArticuloId" class="form-control col-4" />
+                                <div class="input-group-append">
+                                    <button type="button" class="btn btn-primary input-group-text" @onclick="Buscar">Buscar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Fecha</label>
+                    <InputDate @bind-Value="articulos.Fecha" class="form-control" />
+                </div>
+
+
+
+                <div class="form-group">
+                    <label>Descripcion</label>
+                    <InputText @bind-Value="articulos.Descripcion" class="form-control" />
+                    <ValidationMessage For=@(() => articulos.Descripcion) />
+                </div>
+
+
+
+                <div class="form-group">
+                    <label>Existencia</label>
+                    <InputNumber @bind-Value="articulos.Existencia" class="form-control" @oninput="Calculo" @onfocusin="Calculo" @onfocusout="Calculo" />
+                    <ValidationMessage For=@(() => articulos.Existencia) />
+                </div>
+
+
+
+                <div class="form-group">
+                    <label>Costo</label>
+                    <InputNumber @bind-Value="articulos.Costo" class="form-control" @oninput="Calculo" @onfocusin="Calculo" @onfocusout="Calculo" />
+                </div>
+
+
+                <div class="form-group">
+                    <label>Valor Inventario</label>
+                    <InputNumber @bind-Value="articulos.ValorInventario" class="form-control" />
+                </div>
+
+
+            </form>
+
+
+            <h6>@Mensaje</h6>
+
+            <div class="card-footer">
+                <div class="form-group text-center" display:inline-block>
+                    <button type="button" class="btn btn-primary" @onclick="Nuevo">Nuevo</button>
+                    <button type="submit" class="btn btn-success">Guardar</button>
+                    <button type="button" class="btn btn-danger" @onclick="Eliminar">Eliminar</button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+   
+
+</EditForm>
+
+@code {
+
+
+    private Articulos articulos = new Articulos();
+
+    [Parameter]
+    public int ArticuloId { get; set; }
+
+    public string Mensaje = "";
+
+
+
+    protected override void OnInitialized()
+    {
+        Nuevo();
+        Buscar();
+        base.OnInitialized();
+    }
+
+
+    private void Buscar()
+    {
+
+        if (articulos.ArticuloId > 0)
+        {
+            var encontrado = ArticuloBLL.Buscar(articulos.ArticuloId);
+
+            if (encontrado != null)
+            {
+                this.articulos = encontrado;
+
+            }
+            else
+            {
+                Mensaje = "¡¡NO ENCONTRADO!!";
+                Nuevo();
+            }
+        }
+    }
+
+
+
+    private void Nuevo()
+    {
+        articulos = new Articulos();
+        Mensaje = "";
+    }
+
+
+
+    private void Guardar()
+    {
+        bool guardo;
+
+
+
+        guardo = ArticuloBLL.Guardar(articulos);
+
+
+
+        if (guardo)
+        {
+            Nuevo();
+            Mensaje = "¡¡GUARDADO!!";
+        }
+        else
+        {
+            Mensaje = "¡¡NO SE PUDO GUARDAR!!";
+
+        }
+
+
+    }
+
+    private void Eliminar()
+    {
+        bool elimino;
+
+
+        elimino = ArticuloBLL.Eliminar(articulos.ArticuloId);
+
+
+        if (elimino)
+        {
+            Nuevo();
+            Mensaje = "¡¡ELIMINADO!!";
+        }
+        else
+        {
+            Mensaje = "¡¡NO SE PUDO ELIMINAR!!";
+        }
+
+    }
+
+
+    private void Calculo()
+    {
+        
+        articulos.ValorInventario = articulos.Existencia * articulos.Costo;
+        
+    }
+
+}

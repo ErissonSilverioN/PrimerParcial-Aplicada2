@@ -15,10 +15,10 @@ namespace PrimerParcial_Aplicada2.BLL
         public static bool Guardar(Articulos articulos)
         {
             if (!Existe(articulos.ArticuloId))
-                return Modificar(articulos);
+                return Insertar(articulos);
             else
             {
-                return Insertar(articulos);
+                return Modificar(articulos);
             }
         }
 
