@@ -1,0 +1,64 @@
+﻿@page "/C_Articulos"
+
+@using PrimerParcial_Aplicada2.Models;
+@using PrimerParcial_Aplicada2.BLL;
+@using System.Linq;
+
+
+
+<h4>Consulta de Articulos</h4>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Descripcion</th>
+            <th>Existencia</th>
+            <th>Costo</th>
+            <th>Valor Inventatio</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        @foreach (var item in listaArticulos)
+        {
+            <tr>
+                <th>@item.Descripcion</th>
+                <th>@item.Existencia</th>
+                <th>@item.Costo</th>
+                <th>@item.ValorInventario</th>
+            </tr>
+        }
+    </tbody>
+
+    
+
+    
+
+</table>
+
+
+
+
+@code {
+
+    public List<Articulos> listaArticulos;
+
+    ArticuloBLL BLL = new ArticuloBLL();
+
+ 
+
+
+    protected override void OnInitialized()
+    {
+
+
+        listaArticulos = BLL.GetList(e => true);
+        //Suma = listaArticulos.Sum(item => item.ValorInventario);
+
+    }
+
+
+
+
+}
